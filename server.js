@@ -2,12 +2,24 @@ const http = require('http');
 const fs = require('fs');
 
 const server = http.createServer((req, res) => {
-    fs.readFile('./public/index.html', (err, body) => {
-        res.write(body);
-        res.end();
-    });
+    let { url } = req;
+    if (url === '/') {
+        url = '/index.html';
+    }
 
-    res.write('hello');
+    let body;
+    try {
+        body = fs.readFileSync(`./public${url}`);
+    } catch (e) {
+        res.statusCode = 404;
+        res.end();
+        return;
+    }
+
+    console.log(url);
+    res.write(body);
+
+    res.end();
 });
 
 server.listen(3000);
