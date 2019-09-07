@@ -3,14 +3,15 @@ const fs = require('fs');
 
 const server = http.createServer((req, res) => {
     let { url } = req;
-    if (url === '/') {
-        url = '/index.html';
+    if (/\/$/.test(url)) {
+        url = `${url}/index.html`;
     }
 
     let body;
     try {
         body = fs.readFileSync(`./public${url}`);
     } catch (e) {
+        console.log(e);
         res.statusCode = 404;
         res.end();
         return;
