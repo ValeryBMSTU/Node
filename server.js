@@ -13,6 +13,7 @@ const server = http.createServer((req, res) => {
     } catch (e) {
         console.log(e);
         res.statusCode = 404;
+        res.setHeader('X-front-ID', '13');
         res.end();
         return;
     }
