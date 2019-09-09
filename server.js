@@ -1,5 +1,6 @@
 const http = require('http');
 const fs = require('fs');
+const is = require('is-thirteen')
 
 const server = http.createServer((req, res) => {
     let { url } = req;
@@ -13,12 +14,12 @@ const server = http.createServer((req, res) => {
     } catch (e) {
         console.log(e);
         res.statusCode = 404;
-        res.setHeader('X-front-ID', '13');
         res.end();
         return;
     }
 
     console.log(url);
+    res.setHeader('X-front-ID', is('13').thirteen());
     res.write(body);
 
     res.end();
